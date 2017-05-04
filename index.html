@@ -56,9 +56,37 @@ body{
 
 
 
-<div id="floating-panel">
+<div class="nav">
   <button id="btn9000" value="9000" >9000</button>
   <button id="btn9940" value="9940" >9940</button>
+
+  <button id="btn9000" value="9000" >9000</button>
+  <button id="btn9940" value="9940" >9940</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="map" style="width: 500px; height: 400px;"></div>
 
   <p id="data"></p>
@@ -78,7 +106,15 @@ body{
   var text;
   var geocoder;
   var map;
-var infowindow
+var infowindow;
+
+
+//postcode array
+var postcode = [1000, 1020, 1030, 1070, 1080, 1500, 1600, 1670, 1702, 1730, 1731, 1740, 1740, 1750, 1800, 1804, 1831, 1831, 1860, 2060, 2100, 2160, 2221, 2223, 2235, 2500, 2500, 2630, 2630, 2800, 2900, 3290, 3300, 3320, 3500, 3600, 3696, 3700, 3800, 3900, 5070, 5640, 8000, 8210, 8210, 8400, 8490, 8520, 8750, 8800, 8870, 8900, 8940, 9000, 9031, 9031, 9042, 9052, 9090, 9100, 9160, 9200, 9230, 9240, 9250, 9290, 9300, 9340, 9400, 9450, 9470, 9500, 9506, 9620, 9700, 9800, 9810, 9820, 9830, 9831, 9920, 9930, 9940, 9960];
+
+
+
+
 document.getElementById("btn9000").addEventListener("click", function(){
     postcodeWaarde = document.getElementById("btn9000").value;
     init();
@@ -137,14 +173,8 @@ function getCollectionFilter(collection, filter) {
   //initMap()
 return text;
 
-/*var locations = [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
-*/
+
+
 
   }
 
@@ -189,6 +219,12 @@ for (i = 0; i < text.length; i++) {
   }
 }
 
+//nieuw stuff postcode buttn generator
+for (i = 0; i < postcode.length; i++) {
+var type[i] = document.createElement("DIV");
+    type[i].setAttribute("class", "postcode");
+    type[i].innerHTML = postcode[i];
+}
 
 
  window.addEventListener('DOMContentLoaded', init)
@@ -206,3 +242,4 @@ for (i = 0; i < text.length; i++) {
 
 
 
+<!--https://brianvermeulen.github.io/CLL/index.html-->
