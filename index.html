@@ -1,0 +1,208 @@
+<html>
+  <head>
+
+</script>
+    <meta charset="utf-8">
+<style type="text/css">
+/*main*/
+.nav{
+position: fixed;
+width: 350px; 
+left: 100% ;
+height: 100%;
+background-color: #346699;
+}
+button{
+  padding: 20px;
+  background-color: #efefef;
+  color:#282828;
+  width: 150px;
+  margin-right: 0px auto;
+}
+.icon:hover .nav{
+  left: 75%;
+}
+.footer{
+  width:100%;
+  background-color: #ff9900;
+
+}
+body{
+  background-color: #efefef;
+}
+
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        width: 440px;
+      }
+</style>
+
+  </head>
+  <body>
+
+
+
+
+
+<div id="floating-panel">
+  <button id="btn9000" value="9000" >9000</button>
+  <button id="btn9940" value="9940" >9940</button>
+<div id="map" style="width: 500px; height: 400px;"></div>
+
+  <p id="data"></p>
+  <p id="Categorie"></p>
+
+
+  <script id="placeholder" type="text/html">
+    // template if you so desire!
+  </script>
+
+
+
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script type='text/javascript'>    
+  var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/15h-QygMX-wN-4rNOCAu_Hkq3qIPZD1sFYEzjI4VH3eA/pubhtml?gid=1347261659&single=true';
+  var postcodeWaarde;
+  var text;
+  var geocoder;
+  var map;
+var infowindow
+document.getElementById("btn9000").addEventListener("click", function(){
+    postcodeWaarde = document.getElementById("btn9000").value;
+    init();
+    geocodeAddress(geocoder, map, infowindow);
+});
+document.getElementById("btn9940").addEventListener("click", function(){
+    postcodeWaarde = document.getElementById("btn9940").value;
+    init();
+    geocodeAddress(geocoder, map, infowindow);
+});
+
+
+
+  function init() {
+    Tabletop.init( { key: publicSpreadsheetUrl,
+                     callback: showInfo,
+                     simpleSheet: true,
+                     orderby: 'Postcode'} )
+  }
+ 
+
+  function showInfo(data, tabletop) {
+    var contact;
+    
+    
+    contact = document.getElementById("Categorie");
+    contact.innerHTML = "<strong>Klanten: </strong> ";
+
+    //alert('Successfully processed!')
+     //document.getElementById("data").innerHTML = JSON.stringify(data);
+    //data.filter(checkAdult);
+
+var sampleFilter = {'Postcode': postcodeWaarde};
+
+function getCollectionFilter(collection, filter) {
+  // filter out elements and return
+  return collection.filter(function(v) {
+    // get all object keys 
+    return Object.keys(filter)
+      // use `every` method and check all values are equal
+      .every(function(k) {
+        // compare values
+
+        return filter[k] == v[k];
+      });
+  })
+}
+
+  text = getCollectionFilter(data, sampleFilter);
+
+  console.log(text);
+    for (var i = 0; i < text.length; i++) {
+    contact.innerHTML += "<p>" + text[i].Postcode + " " + text[i].Adres+ " "  + text[i].Klanten + "</p>";
+    
+ }
+  //initMap()
+return text;
+
+/*var locations = [
+      ['Bondi Beach', -33.890542, 151.274856, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ];
+*/
+
+  }
+
+
+
+
+function initMap() {
+    console.log(text);
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  geocoder = new google.maps.Geocoder();
+  infowindow = new google.maps.InfoWindow;
+/*
+  document.getElementById('submit').addEventListener('click', function() {
+    
+  });
+  */
+}
+
+function geocodeAddress(geocoder, resultsMap, infowindow) {
+    console.log("nogmaals "+text);
+for (i = 0; i < text.length; i++) {  
+  var address = text[i].Adres+ " " + text[i].Postcode ;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+        map.setZoom(11);
+      resultsMap.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+      for (i = 0; i < text.length; i++) {  
+      infowindow.setContent(text[i].Adres+ " " + text[i].Postcode + text[i].Klanten);
+    infowindow.open(map, marker);
+}
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+  }
+}
+
+
+
+ window.addEventListener('DOMContentLoaded', init)
+
+
+
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXZCeR5lLS1Iu9qwhQasY-CM10rCMi8hs&callback=initMap">
+    </script>
+    
+  </body>
+</html>
+
+
+
+
